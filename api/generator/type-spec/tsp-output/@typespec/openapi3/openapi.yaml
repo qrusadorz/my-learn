@@ -1,0 +1,386 @@
+openapi: 3.0.0
+info:
+  title: Pet Store Service
+  description: |-
+    This is a sample server Petstore server.
+    https://typespec.io/docs/getting-started/getting-started-http
+  version: 0.0.0
+tags:
+  - name: ''
+paths:
+  /pets:
+    get:
+      tags:
+        - ''
+      operationId: list
+      parameters:
+        - name: skip
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: top
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+    post:
+      tags:
+        - ''
+      operationId: create
+      parameters: []
+      responses:
+        '204':
+          description: 'There is no content to send for this request, but the headers may be useful. '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+  /pets/error:
+    get:
+      tags:
+        - ''
+      operationId: Error_get
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+  /pets/{petId}:
+    get:
+      tags:
+        - ''
+      operationId: read
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: if-match
+          in: header
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            e-tag:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '404':
+          description: The server cannot find the requested resource.
+  /pets/{petId}/toys:
+    get:
+      tags:
+        - ''
+      operationId: PetToys_readPet
+      description: Get a Pet list.
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The ID of the pet to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+components:
+  schemas:
+    Cat:
+      type: object
+      required:
+        - name
+        - age
+        - kind
+        - meow
+        - address
+        - furColor
+      properties:
+        name:
+          type: string
+          minLength: 100
+        age:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          description: This is a multi-line comment \n that spans multiple lines
+        kind:
+          type: string
+          enum:
+            - dog
+            - cat
+            - fish
+        PetV2:
+          allOf:
+            - $ref: '#/components/schemas/Password'
+          description: This is a secret field
+          default: '123456'
+        meow:
+          type: boolean
+        address:
+          type: string
+        furColor:
+          type: string
+      description: Represent a Pet available in the PetStore
+    Deprecated.DeprecatedPet:
+      type: object
+      deprecated: true
+    Deprecated.Result:
+      type: object
+      required:
+        - valid
+      properties:
+        valid:
+          type: boolean
+    Direction:
+      type: string
+      enum:
+        - north
+        - east
+        - south
+        - west
+    DirectionExt:
+      type: string
+      enum:
+        - north
+        - east
+        - south
+        - west
+        - North East
+        - North West
+        - South East
+        - South West
+    Dog:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum:
+            - dog
+            - cat
+            - fish
+    DogPage:
+      type: object
+      required:
+        - size
+        - item
+      properties:
+        size:
+          type: integer
+          format: int32
+        item:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dog'
+    Error.PetStoreError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Format.uuid:
+      type: string
+      format: uuid
+    HasHome:
+      type: object
+      required:
+        - address
+      properties:
+        address:
+          type: string
+    Password:
+      type: string
+    Pet:
+      type: object
+      required:
+        - name
+        - age
+        - kind
+      properties:
+        name:
+          type: string
+          minLength: 100
+        age:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          description: This is a multi-line comment \n that spans multiple lines
+        kind:
+          type: string
+          enum:
+            - dog
+            - cat
+            - fish
+        PetV2:
+          allOf:
+            - $ref: '#/components/schemas/Password'
+          description: This is a secret field
+          default: '123456'
+      description: Represent a Pet available in the PetStore
+    PetToys.Toy:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    PropetyType.S1:
+      type: object
+      required:
+        - foo
+        - bar
+      properties:
+        foo:
+          type: string
+        bar:
+          type: integer
+          format: int32
+    PropetyType.S2:
+      type: object
+      required:
+        - foo
+        - bar
+      properties:
+        foo:
+          type: string
+          enum:
+            - abc
+        bar:
+          type: number
+          enum:
+            - 123
+    PropetyType.S3:
+      type: object
+      required:
+        - foo
+        - bar
+      properties:
+        foo:
+          type: string
+        bar:
+          type: integer
+          format: int8
+    PropetyType.S4:
+      type: object
+      required:
+        - foo
+        - bar
+        - otherProp
+      properties:
+        foo:
+          type: string
+        bar:
+          type: integer
+          format: int32
+        otherProp:
+          type: boolean
+    PropetyType.S5:
+      type: object
+      required:
+        - foo
+      properties:
+        foo:
+          type: string
+    PropetyType.S6:
+      type: object
+      required:
+        - foo
+        - bar
+      properties:
+        foo:
+          type: string
+        bar:
+          type: integer
+          format: int64
+    PropetyType.T:
+      type: object
+      required:
+        - foo
+        - bar
+      properties:
+        foo:
+          type: string
+        bar:
+          type: integer
+          format: int32
+    RecordType.S3:
+      type: object
+      additionalProperties:
+        type: integer
+        format: int32
+    RecordType.S4:
+      type: object
+      required:
+        - foo
+      properties:
+        foo:
+          type: number
+          enum:
+            - 123
+      additionalProperties:
+        type: integer
+        format: int32
+    RecordType.S7:
+      type: object
+      required:
+        - foo
+        - bar
+      properties:
+        foo:
+          type: number
+          enum:
+            - 123
+        bar:
+          type: number
+          enum:
+            - 456
+    StringThing:
+      type: object
+      required:
+        - property
+      properties:
+        property:
+          type: string
+servers:
+  - url: https://{region}.foo.com
+    description: Regional endpoint
+    variables:
+      region:
+        default: westus
+        description: Region name

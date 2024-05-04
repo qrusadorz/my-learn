@@ -1,0 +1,3 @@
+# https://typespec.io/docs/handbook/configuration#emit---specifying-which-emitters-to-run
+emit:
+  - "@typespec/openapi3"
