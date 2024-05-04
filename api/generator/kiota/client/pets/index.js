@@ -10,6 +10,8 @@ const models_1 = require("../models/");
 const errorEscaped_1 = require("./errorEscaped/");
 // @ts-ignore
 const item_1 = require("./item/");
+// @ts-ignore
+const kiota_abstractions_1 = require("@microsoft/kiota-abstractions");
 /**
  * Uri template for the request builder.
  */
@@ -35,7 +37,7 @@ exports.PetsRequestBuilderRequestsMetadata = {
         uriTemplate: exports.PetsRequestBuilderUriTemplate,
         responseBodyContentType: "application/json",
         adapterMethodName: "send",
-        responseBodyFactory: createUntypedNodeFromDiscriminatorValue,
+        responseBodyFactory: kiota_abstractions_1.createUntypedNodeFromDiscriminatorValue,
     },
     post: {
         uriTemplate: exports.PetsRequestBuilderUriTemplate,

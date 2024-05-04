@@ -8,7 +8,7 @@ import { ErrorRequestBuilderRequestsMetadata, type ErrorRequestBuilder } from '.
 // @ts-ignore
 import { type WithPetItemRequestBuilder, WithPetItemRequestBuilderNavigationMetadata, WithPetItemRequestBuilderRequestsMetadata } from './item/';
 // @ts-ignore
-import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
+import { UntypedNode, createUntypedNodeFromDiscriminatorValue, type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
 /**
  * Builds and executes requests for operations under /pets

@@ -24,7 +24,7 @@ function main() {
         try {
             // GET /posts
             const allPosts = yield client.pets.get();
-            console.log(`Retrieved ${allPosts === null || allPosts === void 0 ? void 0 : allPosts.length} posts.`);
+            console.log(`Retrieved ${allPosts === null || allPosts === void 0 ? void 0 : allPosts.getValue()} posts.`);
             // // GET /posts/{id}
             // const specificPostId = 5;
             // const specificPost = await client.posts.byPostId(specificPostId).get();

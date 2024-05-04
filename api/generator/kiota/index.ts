@@ -15,7 +15,7 @@ async function main(): Promise<void> {
   try {
     // GET /posts
     const allPosts = await client.pets.get();
-    console.log(`Retrieved ${allPosts?.length} posts.`);
+    console.log(`Retrieved ${allPosts?.getValue()} posts.`);
 
     // // GET /posts/{id}
     // const specificPostId = 5;
